@@ -1,4 +1,7 @@
 # JuiceMe
+
+![ic_launcher-web](https://user-images.githubusercontent.com/2725300/211160536-90f13e53-78e6-4245-9978-33f5313bb04c.png)
+
 Android app using computer vision to topup airtime
 
 Currently workes on Econet airtime
@@ -19,3 +22,5 @@ The application uses Google ML Kit for Text Recognition and so will require an i
 - [ ] Code clean up
 - [ ] Add tests
 - [ ] Add support for > Android 5.0
+
+### App Icon <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by Afian Rochmah Afif - Flaticon</a>
