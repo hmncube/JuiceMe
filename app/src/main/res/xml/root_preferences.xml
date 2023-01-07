@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/history_header">
+
+        <SwitchPreferenceCompat
+            app:key="store_history"
+            app:title="@string/store_history"
+            app:summaryOn="@string/store_history_summary_on"
+            app:summaryOff="@string/store_history_summary_off"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/dial_action_header">
+
+        <SwitchPreferenceCompat
+            app:key="dial_action"
+            app:summaryOff="@string/dial_action_summary_off"
+            app:summaryOn="@string/dial_action_summary_on"
+            app:title="@string/dial_action_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/images_header">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="images"
+            app:summaryOff="@string/images_summary_off"
+            app:summaryOn="@string/images_summary_on"
+            app:title="@string/delete_images_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
