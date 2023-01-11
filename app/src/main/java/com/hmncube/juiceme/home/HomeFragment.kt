@@ -153,7 +153,7 @@ class HomeFragment : Fragment() {
         val image: InputImage
         try {
             image = InputImage.fromFilePath(requireContext(), savedUri!!)
-            val result = recognizer.process(image)
+            recognizer.process(image)
                 .addOnSuccessListener { visionText ->
                     toggleProgressBar(false)
                     viewBinding.cameraBtn.isClickable = true

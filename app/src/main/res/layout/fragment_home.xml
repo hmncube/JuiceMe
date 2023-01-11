@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/resultTv"
-            android:text="Results will be displayed here!"
+            android:text="@string/results"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -44,6 +44,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cameraBtn"
+        android:contentDescription="@string/capture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
@@ -52,6 +53,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialBtn"
+        android:contentDescription="@string/topup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -14,10 +14,13 @@
     <string name="delete">DELETE</string>
     <string name="delete_confirmation_title">Are you sure you want to delete?</string>
     <string name="delete_confirmation">Once deleted you won\'t be able to recover it!</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel">Cancel</string>
     <string name="clear_all">Clear All</string>
     <string name="images_header">Images</string>
     <string name="delete_images_title">Delete generated images</string>
     <string name="images_summary_off">Produced images will not be deleted</string>
     <string name="images_summary_on">Will automatically delete produced images</string>
+    <string name="results">Results will be displayed here!</string>
+    <string name="capture">Capture</string>
+    <string name="topup">Top up</string>
 </resources>

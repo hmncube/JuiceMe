@@ -1,7 +1,7 @@
 package com.hmncube.juiceme.history
 
+import android.annotation.SuppressLint
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +50,7 @@ class HistoryAdapter @Inject constructor(private val listener: OptionsMenuClickL
 
     fun setData(data : MutableList<CardNumber>) {
         dataSet = data
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, dataSet.size)
     }
 
     fun deletedItem(position: Int) {
@@ -58,6 +58,8 @@ class HistoryAdapter @Inject constructor(private val listener: OptionsMenuClickL
         notifyItemRemoved(position)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    // notifyItemRangeRemoved(0, dataSet.size) does not work
     fun clearAll() {
         dataSet.removeAll(dataSet)
         notifyDataSetChanged()
