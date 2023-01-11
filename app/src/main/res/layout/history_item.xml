@@ -16,7 +16,6 @@
         android:padding="8dp">
         <TextView
             android:id="@+id/numberTv"
-            android:text="666666"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:layout_width="0dp"
@@ -25,7 +24,6 @@
 
         <TextView
             android:id="@+id/dateTv"
-            android:text="31/12 2359 HRS"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:layout_width="0dp"
