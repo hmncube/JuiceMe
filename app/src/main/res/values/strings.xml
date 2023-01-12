@@ -20,4 +20,6 @@
     <string name="delete_images_title">Delete generated images</string>
     <string name="images_summary_off">Produced images will not be deleted</string>
     <string name="images_summary_on">Will automatically delete produced images</string>
+    <string name="close_spotlight">Close tutorial</string>
+    <string name="next_target">Next step</string>
 </resources>
