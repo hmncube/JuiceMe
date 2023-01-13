@@ -23,4 +23,10 @@
     <string name="results">Results will be displayed here!</string>
     <string name="capture">Capture</string>
     <string name="topup">Top up</string>
+    <string name="dial_codes_header">Network provider</string>
+    <string name="dial_codes">Network</string>
+    <string name="automatically_detect_network">Detect network provider</string>
+    <string name="automatically_detect_summary_off">Choose the network below</string>
+    <string name="network_not_in_list">The ditected network is unknown.</string>
+    <string name="failed_to_automatically_detect_network">Failed to detect network carrier</string>
 </resources>
