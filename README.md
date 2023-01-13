@@ -4,7 +4,7 @@
 
 Android app using computer vision to topup airtime
 
-Currently workes on Econet airtime
+~~Currently workes on Econet airtime~~ Now supports all networks in Zimbabwe
 
 Minimum android verion Android 5.0
 
@@ -23,10 +23,11 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - Can automatically topup the airtime if the a valid number is found
 
 ### TODO
-- [X] Add support for another networks 
+- [X] Add support for another networks
+- [X] Code clean up
+- [ ] Handle dual sims
 - [ ] Make it generic
-- [ ] Code clean up
 - [ ] Add tests
-- [ ] Add support for > Android 5.0
+- [ ] ~~Add support for < Android 5.0~~ Adding this will make the app big > 25 mb, still weighing weather to impliment
 
 ### App Icon <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by Afian Rochmah Afif - Flaticon</a>
