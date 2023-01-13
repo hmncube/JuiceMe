@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - Can automatically topup the airtime if the a valid number is found
 
 ### TODO
-- [ ] Add support for another networks 
+- [X] Add support for another networks 
 - [ ] Make it generic
 - [ ] Code clean up
 - [ ] Add tests
