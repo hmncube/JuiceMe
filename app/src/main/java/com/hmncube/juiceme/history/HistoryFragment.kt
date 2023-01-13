@@ -9,6 +9,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hmncube.juiceme.R
 import com.hmncube.juiceme.ViewModelFactory
@@ -21,6 +22,8 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
     private lateinit var viewModel: HistoryViewModel
     private lateinit var viewBinding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
+
+    private var codePrefix = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,9 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
             .create(HistoryViewModel::class.java)
         adapter = HistoryAdapter(this)
         setupMenu()
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        codePrefix = sharedPreferences.getString("network_carrier", "")!!
 
         viewBinding.historyRv.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.historyRv.adapter = adapter
@@ -70,7 +76,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
                         return true
                     }
                     R.id.optionMenuRedial -> {
-                        HomeFragment.dialNumber(cardNumber.number, viewBinding.root, requireContext())
+                        HomeFragment.dialNumber(codePrefix, cardNumber.number, viewBinding.root, requireContext())
                         return true
                     }
                 }

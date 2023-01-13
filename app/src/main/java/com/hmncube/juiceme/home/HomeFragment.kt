@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
     private var storeHistory = false
     private var dialDirect = false
     private var automaticallyDelete = false
-
+    private var codePrefix = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,6 +70,7 @@ class HomeFragment : Fragment() {
         storeHistory = sharedPreferences.getBoolean("store_history", false)
         dialDirect = sharedPreferences.getBoolean("dial_action", false)
         automaticallyDelete = sharedPreferences.getBoolean("images", true)
+        codePrefix = sharedPreferences.getString("network_carrier", "")!!
 
         if (dialDirect) {
             viewBinding.dialBtn.visibility = View.GONE
@@ -85,7 +86,9 @@ class HomeFragment : Fragment() {
         }
 
         viewBinding.cameraBtn.setOnClickListener { takePhoto() }
-        viewBinding.dialBtn.setOnClickListener { dialNumber(extractedNumber, viewBinding.root, requireContext()) }
+        viewBinding.dialBtn.setOnClickListener {
+            dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
+        }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -173,7 +176,7 @@ class HomeFragment : Fragment() {
                                 )
                             }
                             if (dialDirect){
-                                dialNumber(extractedNumber, viewBinding.root, requireContext())
+                                dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
                             }
                         }
                     }
@@ -218,6 +221,7 @@ class HomeFragment : Fragment() {
         cursor.close()
         return picturePath
     }
+
     private fun toggleProgressBar(isVisible : Boolean) {
         if (isVisible) {
             viewBinding.progressBar.visibility = View.VISIBLE
@@ -284,13 +288,14 @@ class HomeFragment : Fragment() {
                 }
             }.toTypedArray()
 
-        fun dialNumber(extractedNumber: String, view: View, context: Context) {
+        fun dialNumber(codePrefix: String, extractedNumber: String, view: View, context: Context) {
             if (extractedNumber == "No numbers found!") {
                 Snackbar.make(view, "Cannot recharge with invalid number", Snackbar.LENGTH_SHORT).show()
                 return
             }
             val dialIntent = Intent(Intent.ACTION_CALL)
-            val str = Uri.encode("*121*${extractedNumber}${Uri.decode("%23")}")
+            val str = Uri.encode("$codePrefix${extractedNumber}${Uri.decode("%23")}")
+            Log.d(TAG, "dialNumber: $str $codePrefix")
             dialIntent.data = Uri.parse("tel:$str")
             context.startActivity(dialIntent)
         }
