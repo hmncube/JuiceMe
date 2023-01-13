@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -29,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.hmncube.juiceme.R
 import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
@@ -40,8 +42,10 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 class HomeFragment : Fragment() {
 
+    private val PICK_IMAGE = 100
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewBinding: FragmentHomeBinding
     private var imageCapture: ImageCapture? = null
@@ -77,26 +81,51 @@ class HomeFragment : Fragment() {
 
         // Request camera permissions
         if (allPermissionsGranted()) {
-            startCamera()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startCamera()
+            }
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
 
-        viewBinding.cameraBtn.setOnClickListener { takePhoto() }
+        //>=
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            //viewBinding.cameraBtn.setOnClickListener { takePhoto()}
+        } else {
+            // only for Android 4.4
+            viewBinding.resultIv.setBackgroundResource(R.drawable.ic_camera)
+            viewBinding.cameraBtn.setImageResource(R.drawable.ic_file_open)
+            viewBinding.cameraBtn.setOnClickListener { pickFile() }
+        }
+
         viewBinding.dialBtn.setOnClickListener { dialNumber(extractedNumber, viewBinding.root, requireContext()) }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+    private fun pickFile() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICK_IMAGE) {
+            extractText(data?.data)
+        }
+    }
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                startCamera()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startCamera()
+                }
             } else {
                 Toast.makeText(requireContext(),
                     "Permissions not granted by the user.",
@@ -106,6 +135,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun takePhoto() {
         viewBinding.cameraBtn.isClickable = false
         viewBinding.dialBtn.isClickable = false
@@ -226,6 +256,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
