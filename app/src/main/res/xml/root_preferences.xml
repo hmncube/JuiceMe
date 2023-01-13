@@ -1,19 +1,22 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/history_header">
+    <PreferenceCategory app:title="@string/dial_codes_header">
+        <EditTextPreference
+            app:key="network_carrier"
+            app:title="@string/failed_to_automatically_detect_network"
+            app:enabled="false"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/history_header">
         <SwitchPreferenceCompat
             app:key="store_history"
             app:title="@string/store_history"
             app:summaryOn="@string/store_history_summary_on"
-            app:summaryOff="@string/store_history_summary_off"
-            />
-
+            app:summaryOff="@string/store_history_summary_off"/>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/dial_action_header">
-
         <SwitchPreferenceCompat
             app:key="dial_action"
             app:summaryOff="@string/dial_action_summary_off"
