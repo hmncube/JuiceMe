@@ -29,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.hmncube.juiceme.R
 import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
@@ -293,9 +294,13 @@ class HomeFragment : Fragment() {
                 Snackbar.make(view, "Cannot recharge with invalid number", Snackbar.LENGTH_SHORT).show()
                 return
             }
+
+            if (codePrefix.isEmpty()) {
+                Snackbar.make(view, R.string.network_not_in_list, Snackbar.LENGTH_SHORT).show()
+                return
+            }
             val dialIntent = Intent(Intent.ACTION_CALL)
             val str = Uri.encode("$codePrefix${extractedNumber}${Uri.decode("%23")}")
-            Log.d(TAG, "dialNumber: $str $codePrefix")
             dialIntent.data = Uri.parse("tel:$str")
             context.startActivity(dialIntent)
         }

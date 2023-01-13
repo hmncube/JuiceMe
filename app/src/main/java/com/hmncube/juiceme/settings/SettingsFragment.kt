@@ -25,13 +25,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val networkProviders = resources.getStringArray(R.array.network_codes_entries)
         val ussdCodes = resources.getStringArray(R.array.network_codes_values)
         val index = networkProviders.indexOf(carrierName)
+        val editor = sharedPreferences.edit()
         if (index >= 0) {
-            val editor = sharedPreferences.edit()
             editor.putString("network_carrier", ussdCodes[index])
-            editor.apply()
         } else {
-            autoNetwork?.title = "The $carrierName is uknown"
+            autoNetwork?.title = "The network provider $carrierName is unknown"
+            editor.putString("network_carrier", "")
             Log.e("SettingsFragment", "onCreatePreferences: carrier $carrierName is unknown", )
         }
+        editor.apply()
     }
 }
