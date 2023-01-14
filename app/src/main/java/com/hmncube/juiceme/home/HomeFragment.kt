@@ -23,7 +23,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -33,6 +32,7 @@ import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHomeBinding
+import com.hmncube.juiceme.use_cases.PreferencesUseCase
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -98,11 +98,11 @@ class HomeFragment : Fragment() {
         toggleProgressBar(false)
         viewBinding.dialBtn.isClickable = false
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        storeHistory = sharedPreferences.getBoolean("store_history", false)
-        dialDirect = sharedPreferences.getBoolean("dial_action", false)
-        automaticallyDelete = sharedPreferences.getBoolean("images", true)
-        codePrefix = sharedPreferences.getString("network_carrier", "")!!
+        val preferencesUseCases = PreferencesUseCase(requireContext())
+        storeHistory = preferencesUseCases.getStoreHistory()
+        dialDirect = preferencesUseCases.getDirectDial()
+        automaticallyDelete = preferencesUseCases.getAutomaticallyDelete()
+        codePrefix = preferencesUseCases.getUssdCode() ?: ""
 
         if (dialDirect) {
             viewBinding.dialBtn.visibility = View.GONE
@@ -325,7 +325,7 @@ class HomeFragment : Fragment() {
                 return
             }
             val dialIntent = Intent(Intent.ACTION_CALL)
-            val str = Uri.encode("$codePrefix${extractedNumber}${Uri.decode("%23")}")
+            val str = Uri.encode("$codePrefix${extractedNumber}")
             dialIntent.data = Uri.parse("tel:$str")
             context.startActivity(dialIntent)
         }

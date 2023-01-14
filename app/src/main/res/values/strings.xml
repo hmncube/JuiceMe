@@ -34,4 +34,8 @@
     <string name="call_no_permission">Cannot use the call function because the permission was not granted.</string>
     <string name="error_extracting_text">There was an error extracting the numbers : %s</string>
     <string name="camera_initialisation_failed">The camera failed to initialise.</string>
+    <string name="detect_network">Detect network</string>
+    <string name="click_detect_network">Click to detect network</string>
+    <string name="name_codes">The name and codes of the network used.</string>
+    <string name="select_network">Select network</string>
 </resources>
