@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -182,6 +181,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun extractText(savedUri: Uri?) {
+        extractedNumber = "No numbers found!"
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val image: InputImage
         try {
@@ -231,27 +231,26 @@ class HomeFragment : Fragment() {
 
     private fun deleteGeneratedImage(savedUri: Uri) {
         if (automaticallyDelete) {
-            val filePath = getFilePath(savedUri)
-            val fileDelete = File(filePath)
-            if (fileDelete.exists()) {
-                try {
-                    fileDelete.delete()
-                    Log.d(TAG, "deleteGeneratedImage: deleted file at $filePath with uri $savedUri")
-                } catch (e: Exception) {
-                    Log.e(TAG, "deleteGeneratedImage: failed deleting at $filePath ${e.message}")
-                }
-            }
+            val fileDelete = File(savedUri.path!!)
+            fileDelete.delete(requireContext())
         }
     }
 
-    private fun getFilePath(uri: Uri): String {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = requireContext().contentResolver.query(uri, projection, null, null, null)!!
-        cursor.moveToFirst()
-        val columnIndex: Int = cursor.getColumnIndex(projection[0])
-        val picturePath: String = cursor.getString(columnIndex)
-        cursor.close()
-        return picturePath
+    private fun File.delete(context: Context) {
+        var selectionArgs = arrayOf(this.absolutePath)
+        val contentResolver = context.contentResolver
+        val where: String?
+        val filesUri: Uri?
+        if (Build.VERSION.SDK_INT >= 29) {
+            filesUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            where = MediaStore.Images.Media._ID + "=?"
+            selectionArgs = arrayOf(this.name)
+        } else {
+            where = MediaStore.MediaColumns.DATA + "=?"
+            filesUri = MediaStore.Files.getContentUri("external")
+        }
+
+        contentResolver.delete(filesUri!!, where, selectionArgs)
     }
 
     private fun toggleProgressBar(isVisible : Boolean) {
