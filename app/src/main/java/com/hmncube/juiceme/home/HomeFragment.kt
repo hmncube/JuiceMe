@@ -74,9 +74,7 @@ class HomeFragment : Fragment() {
             ) { isGranted ->
                 grantedCallPermission = isGranted[Manifest.permission.CALL_PHONE]!!
                 grantedCameraPermission = isGranted[Manifest.permission.CAMERA]!!
-                if (grantedCameraPermission) {
-                    startCamera()
-                } else if (isGranted.all { !it.value }) {
+                if (isGranted.all { !it.value }) {
                     displayMessage( R.string.permission_not_granted, Snackbar.LENGTH_LONG)
                 }
             }
@@ -127,6 +125,12 @@ class HomeFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (grantedCameraPermission) {
+            startCamera()
+        }
+    }
     private fun displayMessage(message: Int, duration: Int) {
         Snackbar.make(requireView(), message, duration).show()
     }
