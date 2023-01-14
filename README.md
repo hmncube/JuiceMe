@@ -10,7 +10,7 @@ Minimum android verion Android 5.0
 
 ### To download
 Head over to the release section and select the APK depending on your phones architecture. 
-If you are not sure about the architecture or if it is not on the list download the JuiceMe-universal-release apk
+If you are not sure about the architecture or if it is not on the list download the `JuiceMe-universal-release` apk
 
 ### Coming soon to the Android Play Store
 
@@ -27,7 +27,8 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - Stores the number
 - Can retry the number later on 
 - Can automatically topup the airtime if the a valid number is found
-- Automatticaly detect network being used and select the appropriate USSD of user can manually set
+- Automatticaly detect network being used and select the appropriate USSD
+- User can manually set the network
 
 ### TODO
 - [X] Add support for another networks
