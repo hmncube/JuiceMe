@@ -8,7 +8,13 @@ Android app using computer vision to topup airtime
 
 Minimum android verion Android 5.0
 
-The application uses Google ML Kit for Text Recognition and so will require an internet connection at the beginning.
+### To download
+Head over to the release section and select the APK depending on your phones architecture. 
+If you are not sure about the architecture or if it is not on the list download the JuiceMe-universal-release apk
+
+### Coming soon to the Android Play Store
+
+~~The application uses Google ML Kit for Text Recognition and so will require an internet connection at the beginning.~~ App now completely works offline
 
 ### Video Demo
 
@@ -17,15 +23,16 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 
 
 ### Features
-- Extract airtime vaoucher number from the card
+- Extract airtime voucher number from the card
 - Stores the number
 - Can retry the number later on 
 - Can automatically topup the airtime if the a valid number is found
+- Automatticaly detect network being used and select the appropriate USSD of user can manually set
 
 ### TODO
 - [X] Add support for another networks
 - [X] Code clean up
-- [ ] Handle dual sims
+- [X] Handle dual sims (Best fix while supporting Android 5.0)
 - [ ] Make it generic
 - [ ] Add tests
 - [ ] ~~Add support for < Android 5.0~~ Adding this will make the app big > 25 mb, still weighing weather to impliment
