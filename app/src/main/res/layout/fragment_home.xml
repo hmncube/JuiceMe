@@ -14,11 +14,9 @@
             android:id="@+id/resultIv"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:src="@android:drawable/ic_menu_camera"
             android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-
         <TextView
             android:id="@+id/resultTv"
             android:text="@string/results"

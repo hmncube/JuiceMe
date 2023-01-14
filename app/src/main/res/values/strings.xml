@@ -29,4 +29,9 @@
     <string name="automatically_detect_summary_off">Choose the network below</string>
     <string name="network_not_in_list">The detected network carrier is unknown.</string>
     <string name="failed_to_automatically_detect_network">Failed to detect network carrier</string>
+    <string name="permission_not_granted">No permissions where granted, the application will not function properly.</string>
+    <string name="camera_no_permission">Cannot use the camera because the permission was not granted.</string>
+    <string name="call_no_permission">Cannot use the call function because the permission was not granted.</string>
+    <string name="error_extracting_text">There was an error extracting the numbers : %s</string>
+    <string name="camera_initialisation_failed">The camera failed to initialise.</string>
 </resources>

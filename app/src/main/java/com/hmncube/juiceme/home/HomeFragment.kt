@@ -14,13 +14,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
@@ -53,6 +52,10 @@ class HomeFragment : Fragment() {
     private var dialDirect = false
     private var automaticallyDelete = false
     private var codePrefix = ""
+
+    private var grantedCallPermission = true
+    private var grantedCameraPermission = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,8 +64,36 @@ class HomeFragment : Fragment() {
         return viewBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            val permissionLauncher = registerForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { isGranted ->
+                grantedCallPermission = isGranted[Manifest.permission.CALL_PHONE]!!
+                grantedCameraPermission = isGranted[Manifest.permission.CAMERA]!!
+                if (isGranted.all { !it.value }) {
+                    displayMessage( R.string.permission_not_granted, Snackbar.LENGTH_LONG)
+                }
+            }
+
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.CALL_PHONE
+                )
+            ).apply {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelFactory(AppDatabase.getDatabase(requireContext())).create(HomeViewModel::class.java)
         toggleProgressBar(false)
         viewBinding.dialBtn.isClickable = false
@@ -76,38 +107,36 @@ class HomeFragment : Fragment() {
         if (dialDirect) {
             viewBinding.dialBtn.visibility = View.GONE
         }
-
-        // Request camera permissions
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
+        viewBinding.cameraBtn.setOnClickListener {
+            if (grantedCameraPermission) {
+                takePhoto()
+            } else {
+                displayMessage(R.string.camera_no_permission, Snackbar.LENGTH_SHORT)
+            }
         }
-
-        viewBinding.cameraBtn.setOnClickListener { takePhoto() }
         viewBinding.dialBtn.setOnClickListener {
-            dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
+            if (grantedCallPermission) {
+                dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
+            } else {
+                displayMessage(R.string.call_no_permission, Snackbar.LENGTH_SHORT)
+            }
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(requireContext(),
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                requireActivity().finish()
-            }
+    override fun onResume() {
+        super.onResume()
+        if (grantedCameraPermission) {
+            startCamera()
         }
+    }
+    private fun displayMessage(message: Int, duration: Int) {
+        Snackbar.make(requireView(), message, duration).show()
+    }
+
+    private fun displayMessage(message: String) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun takePhoto() {
@@ -176,8 +205,10 @@ class HomeFragment : Fragment() {
                                     )
                                 )
                             }
-                            if (dialDirect){
+                            if (dialDirect && grantedCallPermission) {
                                 dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
+                            }else if (dialDirect){
+                                displayMessage(R.string.call_no_permission, Snackbar.LENGTH_SHORT)
                             }
                         }
                     }
@@ -185,14 +216,14 @@ class HomeFragment : Fragment() {
                 }
                 .addOnFailureListener { e ->
                     toggleProgressBar(false)
-                    Log.e(TAG, "extractText: Error", e)
-                    Toast.makeText(requireContext(), "There was an error extracting the numbers : ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "extractText: Failure", e)
+                    displayMessage(String.format(resources.getString(R.string.error_extracting_text), e.message))
                     viewBinding.cameraBtn.isClickable = true
                 }
         } catch (e: IOException) {
             e.printStackTrace()
             Log.e(TAG, "extractText: Error", e)
-            Toast.makeText(requireContext(), "There was an error extracting the numbers : ${e.message}", Toast.LENGTH_SHORT).show()
+            displayMessage(String.format(resources.getString(R.string.error_extracting_text), e.message))
             viewBinding.cameraBtn.isClickable = false
         }
         deleteGeneratedImage(savedUri!!)
@@ -218,7 +249,7 @@ class HomeFragment : Fragment() {
         val cursor: Cursor = requireContext().contentResolver.query(uri, projection, null, null, null)!!
         cursor.moveToFirst()
         val columnIndex: Int = cursor.getColumnIndex(projection[0])
-        val picturePath: String = cursor.getString(columnIndex) // returns null
+        val picturePath: String = cursor.getString(columnIndex)
         cursor.close()
         return picturePath
     }
@@ -235,10 +266,8 @@ class HomeFragment : Fragment() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            // Preview
             val preview = Preview.Builder()
                 .build()
                 .also {
@@ -247,18 +276,15 @@ class HomeFragment : Fragment() {
 
             imageCapture = ImageCapture.Builder().build()
 
-            // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-                // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
-
-                // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture)
 
             } catch(exc: Exception) {
+                displayMessage(R.string.camera_initialisation_failed, Snackbar.LENGTH_SHORT)
                 Log.e(TAG, "Use case binding failed", exc)
             }
 
@@ -278,7 +304,6 @@ class HomeFragment : Fragment() {
     companion object {
         private const val TAG = "JuiceMe"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
                 Manifest.permission.CAMERA,
