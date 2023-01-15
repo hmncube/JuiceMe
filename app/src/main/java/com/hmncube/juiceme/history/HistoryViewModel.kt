@@ -26,7 +26,7 @@ class HistoryViewModel(private val appDatabase: AppDatabase) : ViewModel() {
         }
     }
 
-    fun deleteEntry(cardNumber: CardNumber): Unit {
+    fun deleteEntry(cardNumber: CardNumber) {
         viewModelScope.launch {
             appDatabase.cardNumberDao().delete(cardNumber)
         }

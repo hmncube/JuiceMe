@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Color.argb
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,9 +14,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -33,24 +29,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.hmncube.juiceme.R
 import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHomeBinding
-import com.takusemba.spotlight.OnSpotlightListener
-import com.takusemba.spotlight.OnTargetListener
-import com.takusemba.spotlight.Spotlight
-import com.takusemba.spotlight.Target
-import com.takusemba.spotlight.effet.RippleEffect
-import com.takusemba.spotlight.shape.Circle
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
 
 class HomeFragment : Fragment() {
 
@@ -100,69 +88,6 @@ class HomeFragment : Fragment() {
         viewBinding.dialBtn.setOnClickListener { dialNumber(extractedNumber, viewBinding.root, requireContext()) }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
-        val firstRoot = FrameLayout(requireContext())
-        val firstLayout = layoutInflater.inflate(R.layout.layout_target, firstRoot)
-/*
-        var pivotX = viewBinding.resultIv.pivotX
-        var pivotY = viewBinding.resultIv.pivotY
-        val target1 = Target.Builder()
-            .setAnchor(pivotX, pivotY)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(firstLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted: first target is started at x: ${pivotX} y: ${pivotY}")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
-        // create spotlight
-        val spotlight = Spotlight.Builder(requireActivity())
-            .setTargets(listOf(target1))
-            .setBackgroundColorRes(R.color.teal)
-            .setDuration(1000L)
-            .setAnimation(DecelerateInterpolator(2f))
-            .setOnSpotlightListener(object : OnSpotlightListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted: spotlight")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onEnded: onEnded")
-                }
-            })
-            .build()
-
-        spotlight.start()
-
-        val nextTarget = View.OnClickListener { spotlight.next() }
-
-        val closeSpotlight = View.OnClickListener { spotlight.finish() }
-
-        firstLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-/*        secondLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-        thirdLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-        fourthLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)*/
-
-        firstLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-/*        secondLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-        thirdLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-        fourthLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)*/
-
- */
-        viewBinding.homeLayout.viewTreeObserver.addOnGlobalLayoutListener(
-            object : OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    //Remove the listener before proceeding
-                    viewBinding.homeLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-                    setUpTutorial()
-                }
-            }
-        )
     }
 
     override fun onRequestPermissionsResult(
@@ -338,135 +263,6 @@ class HomeFragment : Fragment() {
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             requireActivity(), it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-    private fun setUpTutorial() {
-        val firstRoot = FrameLayout(requireContext())
-        val firstLayout = layoutInflater.inflate(R.layout.layout_target, firstRoot)
-        val firstTarget = Target.Builder()
-            .setAnchor(viewBinding.resultIv)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(firstLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted:")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
-
-        val secondRoot = FrameLayout(requireContext())
-        val secondLayout = layoutInflater.inflate(R.layout.layout_target, secondRoot)
-        val secondTarget =  Target.Builder()
-            .setAnchor(viewBinding.cameraBtn)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(secondLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted:")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
-
-        val thirdRoot = FrameLayout(requireContext())
-        val thirdLayout = layoutInflater.inflate(R.layout.layout_target, thirdRoot)
-        val thirdTarget = Target.Builder()
-            .setAnchor(viewBinding.resultTv)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(thirdLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted:")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
-
-        val fourthRoot = FrameLayout(requireContext())
-        val fourthLayout = layoutInflater.inflate(R.layout.layout_target, fourthRoot)
-        val fourthTarget = Target.Builder()
-            .setAnchor(viewBinding.dialBtn)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(fourthLayout)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted:")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
-
-        val targets = listOf(
-            firstTarget,
-            secondTarget,
-            thirdTarget,
-            fourthTarget
-        )
-
-        // create spotlight
-        val spotlight = Spotlight.Builder(requireActivity())
-            .setTargets(targets)
-            .setBackgroundColorRes(R.color.teal)
-            .setDuration(1000L)
-            .setAnimation(DecelerateInterpolator(2f))
-            .setOnSpotlightListener(object : OnSpotlightListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted: spotlight")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onEnded: onEnded")
-                }
-            })
-            .build()
-
-        spotlight.start()
-
-        val nextTarget = View.OnClickListener { spotlight.next() }
-
-        val closeSpotlight = View.OnClickListener { spotlight.finish() }
-
-        firstLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-        secondLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-        thirdLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-        fourthLayout.findViewById<View>(R.id.close_target).setOnClickListener(nextTarget)
-
-        firstLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-        secondLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-        thirdLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-        fourthLayout.findViewById<View>(R.id.close_spotlight).setOnClickListener(closeSpotlight)
-    }
-
-    private fun setUpTutorialTarget(overlay: View, anchorViewX: Float, anchorViewY: Float) : Target {
-        return Target.Builder()
-            .setAnchor(viewBinding.resultTv)
-            .setShape(Circle(100f))
-            .setEffect(RippleEffect(100f, 200f, argb(30, 124, 255, 90)))
-            .setOverlay(overlay)
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                    Log.d(TAG, "onStarted: ${overlay.transitionName} target is started at x: $anchorViewX y: $anchorViewY")
-                }
-                override fun onEnded() {
-                    Log.d(TAG, "onStarted: first target ends")
-                }
-            })
-            .build()
     }
 
     override fun onDestroy() {
