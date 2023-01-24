@@ -324,7 +324,7 @@ class HomeFragment : Fragment() {
                 return
             }
             val dialIntent = Intent(Intent.ACTION_CALL)
-            val str = Uri.encode("$codePrefix${extractedNumber}")
+            val str = Uri.encode("$codePrefix${extractedNumber}${Uri.decode("%23")}")
             dialIntent.data = Uri.parse("tel:$str")
             context.startActivity(dialIntent)
         }
