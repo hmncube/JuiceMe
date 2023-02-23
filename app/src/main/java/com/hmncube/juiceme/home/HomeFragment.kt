@@ -31,14 +31,16 @@ import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHomeBinding
-import com.hmncube.juiceme.use_cases.PreferencesUseCase
+import com.hmncube.juiceme.useCases.PreferencesUseCase
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.RejectedExecutionException
 
+@SuppressWarnings("TooManyFunctions")
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
@@ -194,7 +196,7 @@ class HomeFragment : Fragment() {
                     val blocks = visionText.textBlocks
                     for (block in blocks) {
                         val blockText = block.text.replace(" ", "")
-                        if(blockText.isDigitsOnly() && blockText.count() == 17) {
+                        if(blockText.isDigitsOnly() && blockText.count() == numberOfDigits) {
                             extractedNumber = blockText
                             if (storeHistory) {
                                 viewModel.saveCardNumber(
@@ -221,7 +223,6 @@ class HomeFragment : Fragment() {
                     viewBinding.cameraBtn.isClickable = true
                 }
         } catch (e: IOException) {
-            e.printStackTrace()
             Log.e(TAG, "extractText: Error", e)
             displayMessage(String.format(resources.getString(R.string.error_extracting_text), e.message))
             viewBinding.cameraBtn.isClickable = false
@@ -241,7 +242,7 @@ class HomeFragment : Fragment() {
         val contentResolver = context.contentResolver
         val where: String?
         val filesUri: Uri?
-        if (Build.VERSION.SDK_INT >= 29) {
+        if (Build.VERSION.SDK_INT >= SDK_INT) {
             filesUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             where = MediaStore.Images.Media._ID + "=?"
             selectionArgs = arrayOf(this.name)
@@ -282,7 +283,7 @@ class HomeFragment : Fragment() {
                 cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture)
 
-            } catch(exc: Exception) {
+            } catch(exc: RejectedExecutionException) {
                 displayMessage(R.string.camera_initialisation_failed, Snackbar.LENGTH_SHORT)
                 Log.e(TAG, "Use case binding failed", exc)
             }
@@ -329,5 +330,7 @@ class HomeFragment : Fragment() {
             context.startActivity(dialIntent)
         }
 
+        private const val numberOfDigits = 17
+        private const val SDK_INT = 29
     }
 }

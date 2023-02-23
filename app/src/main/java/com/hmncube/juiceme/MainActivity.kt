@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.hmncube.juiceme.databinding.ActivityMainBinding
-import com.hmncube.juiceme.use_cases.PreferencesUseCase
-import com.hmncube.juiceme.use_cases.TelephonyUseCase
+import com.hmncube.juiceme.useCases.PreferencesUseCase
+import com.hmncube.juiceme.useCases.TelephonyUseCase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
