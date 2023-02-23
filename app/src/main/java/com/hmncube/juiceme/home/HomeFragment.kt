@@ -31,7 +31,7 @@ import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHomeBinding
-import com.hmncube.juiceme.use_cases.PreferencesUseCase
+import com.hmncube.juiceme.useCases.PreferencesUseCase
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat

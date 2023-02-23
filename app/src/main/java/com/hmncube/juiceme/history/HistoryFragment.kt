@@ -21,7 +21,7 @@ import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHistoryBinding
 import com.hmncube.juiceme.home.HomeFragment
-import com.hmncube.juiceme.use_cases.PreferencesUseCase
+import com.hmncube.juiceme.useCases.PreferencesUseCase
 
 class HistoryFragment : Fragment(), OptionsMenuClickListener {
     private lateinit var viewModel: HistoryViewModel

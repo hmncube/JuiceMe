@@ -5,8 +5,8 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.hmncube.juiceme.R
-import com.hmncube.juiceme.use_cases.PreferencesUseCase
-import com.hmncube.juiceme.use_cases.TelephonyUseCase
+import com.hmncube.juiceme.useCases.PreferencesUseCase
+import com.hmncube.juiceme.useCases.TelephonyUseCase
 
 class SettingsFragment : PreferenceFragmentCompat() {
     var selectNetwork: ListPreference? = null
