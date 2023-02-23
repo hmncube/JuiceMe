@@ -13,8 +13,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -24,11 +22,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.hmncube.juiceme.R
-import com.hmncube.juiceme.UserFeedback
 import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
@@ -57,8 +55,6 @@ class HomeFragment : Fragment() {
     private var grantedCallPermission = true
     private var grantedCameraPermission = true
 
-    private var pickMedia : ActivityResultLauncher<PickVisualMediaRequest>? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,7 +74,7 @@ class HomeFragment : Fragment() {
                 grantedCallPermission = isGranted[Manifest.permission.CALL_PHONE]!!
                 grantedCameraPermission = isGranted[Manifest.permission.CAMERA]!!
                 if (isGranted.all { !it.value }) {
-                    displayMessage( R.string.permission_not_granted)
+                    displayMessage( R.string.permission_not_granted, Snackbar.LENGTH_LONG)
                 }
             }
 
@@ -91,18 +87,6 @@ class HomeFragment : Fragment() {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 }
-            }
-        }
-       pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-                Log.d("PhotoPicker", "Selected URI: $uri")
-                toggleProgressBar(true)
-                extractText(
-                    savedUri = uri,
-                    isInternalPicture = true
-                )
-            } else {
-                Log.d("PhotoPicker", "No media selected")
             }
         }
     }
@@ -126,19 +110,15 @@ class HomeFragment : Fragment() {
             if (grantedCameraPermission) {
                 takePhoto()
             } else {
-                displayMessage(R.string.camera_no_permission)
+                displayMessage(R.string.camera_no_permission, Snackbar.LENGTH_SHORT)
             }
         }
         viewBinding.dialBtn.setOnClickListener {
             if (grantedCallPermission) {
                 dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
             } else {
-                displayMessage(R.string.call_no_permission)
+                displayMessage(R.string.call_no_permission, Snackbar.LENGTH_SHORT)
             }
-        }
-
-        viewBinding.filePickerBtn.setOnClickListener {
-            pickMedia?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -150,13 +130,12 @@ class HomeFragment : Fragment() {
             startCamera()
         }
     }
-
-    private fun displayMessage(message: Int) {
-        UserFeedback.displayFeedback(requireView(), message, UserFeedback.LENGTH_SHORT)
+    private fun displayMessage(message: Int, duration: Int) {
+        Snackbar.make(requireView(), message, duration).show()
     }
 
     private fun displayMessage(message: String) {
-        UserFeedback.displayFeedback(requireView(), message, UserFeedback.LENGTH_SHORT)
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun takePhoto() {
@@ -201,7 +180,7 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun extractText(savedUri: Uri?, isInternalPicture: Boolean = false) {
+    private fun extractText(savedUri: Uri?) {
         extractedNumber = "No numbers found!"
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val image: InputImage
@@ -220,16 +199,16 @@ class HomeFragment : Fragment() {
                             if (storeHistory) {
                                 viewModel.saveCardNumber(
                                     CardNumber(
-                                        uid = 0,
-                                        number = blockText,
-                                        date = Calendar.getInstance().timeInMillis
+                                        0,
+                                        blockText,
+                                        Calendar.getInstance().timeInMillis
                                     )
                                 )
                             }
                             if (dialDirect && grantedCallPermission) {
                                 dialNumber(codePrefix, extractedNumber, viewBinding.root, requireContext())
                             }else if (dialDirect){
-                                displayMessage(R.string.call_no_permission)
+                                displayMessage(R.string.call_no_permission, Snackbar.LENGTH_SHORT)
                             }
                         }
                     }
@@ -247,10 +226,7 @@ class HomeFragment : Fragment() {
             displayMessage(String.format(resources.getString(R.string.error_extracting_text), e.message))
             viewBinding.cameraBtn.isClickable = false
         }
-
-        if (!isInternalPicture) {
-            deleteGeneratedImage(savedUri!!)
-        }
+        deleteGeneratedImage(savedUri!!)
     }
 
     private fun deleteGeneratedImage(savedUri: Uri) {
@@ -307,7 +283,7 @@ class HomeFragment : Fragment() {
                     this, cameraSelector, preview, imageCapture)
 
             } catch(exc: Exception) {
-                displayMessage(R.string.camera_initialisation_failed)
+                displayMessage(R.string.camera_initialisation_failed, Snackbar.LENGTH_SHORT)
                 Log.e(TAG, "Use case binding failed", exc)
             }
 
@@ -339,12 +315,12 @@ class HomeFragment : Fragment() {
 
         fun dialNumber(codePrefix: String, extractedNumber: String, view: View, context: Context) {
             if (extractedNumber == "No numbers found!") {
-                UserFeedback.displayFeedback(view, R.string.cannot_recharge, UserFeedback.LENGTH_SHORT)
+                Snackbar.make(view, "Cannot recharge with invalid number", Snackbar.LENGTH_SHORT).show()
                 return
             }
 
             if (codePrefix.isEmpty()) {
-                UserFeedback.displayFeedback(view, R.string.network_not_in_list, UserFeedback.LENGTH_SHORT)
+                Snackbar.make(view, R.string.network_not_in_list, Snackbar.LENGTH_SHORT).show()
                 return
             }
             val dialIntent = Intent(Intent.ACTION_CALL)
