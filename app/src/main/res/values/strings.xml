@@ -38,4 +38,11 @@
     <string name="click_detect_network">Click to detect network</string>
     <string name="name_codes">The name and codes of the network used.</string>
     <string name="select_network">Select network</string>
+    <string name="custom_dial_code">Custom dial code</string>
+    <string name="custom_dial_code_summary">Add a custom dial code that will be used to top up the airtime.</string>
+    <string name="dial_code_changed">The dial code has been successfully changed</string>
+    <string name="searching_for_network">Searching for the network, please wait!!</string>
+    <string name="updated_the_network_details">The network details have been updated</string>
+    <string name="cannot_recharge">Cannot recharge with invalid number</string>
+    <string name="filePicker">Pick a file</string>
 </resources>

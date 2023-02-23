@@ -9,7 +9,6 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hmncube.juiceme.R
 import com.hmncube.juiceme.ViewModelFactory
@@ -17,6 +16,7 @@ import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHistoryBinding
 import com.hmncube.juiceme.home.HomeFragment
+import com.hmncube.juiceme.use_cases.PreferencesUseCase
 
 class HistoryFragment : Fragment(), OptionsMenuClickListener {
     private lateinit var viewModel: HistoryViewModel
@@ -40,8 +40,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
         adapter = HistoryAdapter(this)
         setupMenu()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        codePrefix = sharedPreferences.getString("network_carrier", "")!!
+        codePrefix = PreferencesUseCase(requireContext()).getUssdCode() ?: ""
 
         viewBinding.historyRv.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.historyRv.adapter = adapter
