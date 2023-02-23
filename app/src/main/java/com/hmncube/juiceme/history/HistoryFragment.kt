@@ -1,7 +1,12 @@
 package com.hmncube.juiceme.history
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.MenuHost
@@ -33,6 +38,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
         return viewBinding.root
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelFactory(AppDatabase.getDatabase(requireContext()))
@@ -68,22 +74,29 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
     override fun onOptionsMenuClicked(cardNumber: CardNumber, position: Int) {
         val popupMenu = PopupMenu(requireContext() , viewBinding.historyRv[position].findViewById(R.id.dateTv))
         popupMenu.inflate(R.menu.options_menu)
-        popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-            override fun onMenuItemClick(item: MenuItem?): Boolean {
-                when(item?.itemId){
-                    R.id.optionMenuDelete -> {
-                        showConfirmationDialog(cardNumber, position)
-                        return true
-                    }
-                    R.id.optionMenuRedial -> {
-                        HomeFragment.dialNumber(codePrefix, cardNumber.number, viewBinding.root, requireContext())
-                        return true
-                    }
-                }
-                return false
-            }
-        })
+        popupMenu.setOnMenuItemClickListener { item ->
+            handleMenuClicks(
+                item = item,
+                cardNumber = cardNumber,
+                position = position
+            )
+        }
         popupMenu.show()
+    }
+
+    @SuppressWarnings("ReturnCount")
+    private fun handleMenuClicks(item: MenuItem?, cardNumber: CardNumber, position: Int) : Boolean {
+        when(item?.itemId){
+            R.id.optionMenuDelete -> {
+                showConfirmationDialog(cardNumber, position)
+                return true
+            }
+            R.id.optionMenuRedial -> {
+                HomeFragment.dialNumber(codePrefix, cardNumber.number, viewBinding.root, requireContext())
+                return true
+            }
+        }
+        return false
     }
 
     private fun showConfirmationDialog(cardNumber: CardNumber, position: Int) {

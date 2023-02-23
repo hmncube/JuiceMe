@@ -1,4 +1,4 @@
-package com.hmncube.juiceme.use_cases
+package com.hmncube.juiceme.useCases
 
 import android.content.Context
 import androidx.preference.PreferenceManager
