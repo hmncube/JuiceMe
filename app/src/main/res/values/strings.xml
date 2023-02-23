@@ -10,8 +10,8 @@
     <string name="store_history_summary_on">Store found numbers for future use</string>
     <string name="store_history_summary_off">Do not store found numbers for future use</string>
     <string name="about_header">About</string>
-    <string name="redial">REDIAL</string>
-    <string name="delete">DELETE</string>
+    <string name="menu_redial">REDIAL</string>
+    <string name="menu_delete">DELETE</string>
     <string name="delete_confirmation_title">Are you sure you want to delete?</string>
     <string name="delete_confirmation">Once deleted you won\'t be able to recover it!</string>
     <string name="cancel">Cancel</string>
@@ -45,4 +45,7 @@
     <string name="updated_the_network_details">The network details have been updated</string>
     <string name="cannot_recharge">Cannot recharge with invalid number</string>
     <string name="filePicker">Pick a file</string>
+    <string name="menu_copy">COPY</string>
+    <string name="recharge_code">Recharge code</string>
+    <string name="copied_recharge_code">Copied %s</string>
 </resources>
