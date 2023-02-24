@@ -1,5 +1,9 @@
 package com.hmncube.juiceme.history
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,14 +18,15 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hmncube.juiceme.R
+import com.hmncube.juiceme.UserFeedback
 import com.hmncube.juiceme.ViewModelFactory
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import com.hmncube.juiceme.databinding.FragmentHistoryBinding
 import com.hmncube.juiceme.home.HomeFragment
+import com.hmncube.juiceme.useCases.PreferencesUseCase
 
 class HistoryFragment : Fragment(), OptionsMenuClickListener {
     private lateinit var viewModel: HistoryViewModel
@@ -46,8 +51,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
         adapter = HistoryAdapter(this)
         setupMenu()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        codePrefix = sharedPreferences.getString("network_carrier", "")!!
+        codePrefix = PreferencesUseCase(requireContext()).getUssdCode() ?: ""
 
         viewBinding.historyRv.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.historyRv.adapter = adapter
@@ -95,6 +99,22 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
                 HomeFragment.dialNumber(codePrefix, cardNumber.number, viewBinding.root, requireContext())
                 return true
             }
+            R.id.optionMenuCopy -> {
+                val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip: ClipData =
+                    ClipData.newPlainText(
+                        requireContext().resources.getString(R.string.recharge_code), cardNumber.number
+                    )
+                clipboard.setPrimaryClip(clip)
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                    UserFeedback().displayFeedback(
+                        requireView(), String.format(
+                            resources.getString(R.string.copied_recharge_code), cardNumber.number),
+                        UserFeedback.LENGTH_SHORT
+                    )
+                }
+                return true
+            }
         }
         return false
     }
@@ -103,7 +123,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
         val alertDialog: AlertDialog? = activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
-                setPositiveButton(R.string.delete) { _, _ ->
+                setPositiveButton(R.string.menu_delete) { _, _ ->
                     viewModel.deleteEntry(cardNumber)
                     adapter.deletedItem(position)
                 }

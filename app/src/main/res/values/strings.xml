@@ -10,8 +10,8 @@
     <string name="store_history_summary_on">Store found numbers for future use</string>
     <string name="store_history_summary_off">Do not store found numbers for future use</string>
     <string name="about_header">About</string>
-    <string name="redial">REDIAL</string>
-    <string name="delete">DELETE</string>
+    <string name="menu_redial">REDIAL</string>
+    <string name="menu_delete">DELETE</string>
     <string name="delete_confirmation_title">Are you sure you want to delete?</string>
     <string name="delete_confirmation">Once deleted you won\'t be able to recover it!</string>
     <string name="cancel">Cancel</string>
@@ -38,4 +38,21 @@
     <string name="click_detect_network">Click to detect network</string>
     <string name="name_codes">The name and codes of the network used.</string>
     <string name="select_network">Select network</string>
+    <string name="custom_dial_code">Custom dial code</string>
+    <string name="custom_dial_code_summary">Add a custom dial code that will be used to top up the airtime.</string>
+    <string name="dial_code_changed">The dial code has been successfully changed</string>
+    <string name="searching_for_network">Searching for the network, please wait!!</string>
+    <string name="updated_the_network_details">The network details have been updated</string>
+    <string name="cannot_recharge">Cannot recharge with invalid number</string>
+    <string name="filePicker">Pick a file</string>
+    <string name="menu_copy">COPY</string>
+    <string name="recharge_code">Recharge code</string>
+    <string name="copied_recharge_code">Copied %s</string>
+    <string name="recharge_code_length">Recharge card length</string>
+    <string name="recharge_code_length_summary">The number of digits the recharge codes should have</string>
+    <string name="set_length">Click to change length</string>
+    <string name="cannot_save_empty_length">Sorry, you can not save an empty length</string>
+    <string name="ussd_length_not_digits_error">The length should be a number between 1 and 50</string>
+    <string name="ussd_length_saved">The USSD length has been saved!!</string>
+    <string name="enter_correct_code">Please enter a valid USSD code</string>
 </resources>

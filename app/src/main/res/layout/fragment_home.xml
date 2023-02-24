@@ -20,8 +20,9 @@
         <TextView
             android:id="@+id/resultTv"
             android:text="@string/results"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="24sp"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
@@ -48,6 +49,15 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
         android:src="@drawable/ic_camera"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filePickerBtn"
+        android:contentDescription="@string/filePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_file_open"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialBtn"

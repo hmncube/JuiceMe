@@ -16,8 +16,25 @@
             app:key="select_network_carrier"
             app:title="@string/select_network"
             app:entryValues="@array/network_codes_values"
-            app:entries="@array/network_codes_entries"/>
+            app:entries="@array/network_codes_entries" />
 
+        <SwitchPreferenceCompat
+            app:key="custom_dial_code"
+            app:title="@string/custom_dial_code"
+            app:summary="@string/custom_dial_code_summary" />
+
+        <EditTextPreference
+            app:key="custom_dial_code_et"
+            app:title="@string/custom_dial_code" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/recharge_code_length"
+        app:summary="@string/recharge_code_length_summary">
+        <EditTextPreference
+            app:key="recharge_code_length_et"
+            app:title="@string/recharge_code_length"
+            app:summary="@string/set_length"/>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/history_header">

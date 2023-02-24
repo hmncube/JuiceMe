@@ -39,11 +39,27 @@ class PreferencesUseCase(private val context: Context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IMAGES, true)
     }
 
+    fun saveRechargeCardLength(length: String) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putString(USSD_LENGTH, length)
+        editor.apply()
+    }
+
+    fun getRechargeCardLength() : Int {
+        val len = PreferenceManager
+            .getDefaultSharedPreferences(context).getString(USSD_LENGTH, DEFAULT_RECHARGE_CARD_LENGTH)
+        return len!!.toInt()
+    }
+
     companion object {
         const val CARRIER_NAME = "carrier_name"
         const val USSD_CODE = "ussd_code"
+        const val USSD_LENGTH = "ussd_length"
         const val STORE_HISTORY = "store_history"
         const val DIAL_ACTION = "dial_action"
         const val IMAGES = "images"
+
+        const val DEFAULT_RECHARGE_CARD_LENGTH = "17"
     }
 }

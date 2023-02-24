@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/optionMenuRedial"
-        android:title="@string/redial"/>
+        android:title="@string/menu_redial"/>
+    <item
+        android:id="@+id/optionMenuCopy"
+        android:title="@string/menu_copy"/>
     <item
         android:id="@+id/optionMenuDelete"
-        android:title="@string/delete"/>
+        android:title="@string/menu_delete"/>
 </menu>
