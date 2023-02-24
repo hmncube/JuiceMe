@@ -29,6 +29,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/recharge_code_length"
+        app:summary="@string/recharge_code_length_summary">
+        <EditTextPreference
+            app:key="recharge_code_length_et"
+            app:title="@string/recharge_code_length"
+            app:summary="@string/set_length"/>
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/history_header">
         <SwitchPreferenceCompat
             app:key="store_history"

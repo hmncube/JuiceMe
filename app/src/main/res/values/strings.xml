@@ -48,4 +48,11 @@
     <string name="menu_copy">COPY</string>
     <string name="recharge_code">Recharge code</string>
     <string name="copied_recharge_code">Copied %s</string>
+    <string name="recharge_code_length">Recharge card length</string>
+    <string name="recharge_code_length_summary">The number of digits the recharge codes should have</string>
+    <string name="set_length">Click to change length</string>
+    <string name="cannot_save_empty_length">Sorry, you can not save an empty length</string>
+    <string name="ussd_length_not_digits_error">The length should be a number between 1 and 50</string>
+    <string name="ussd_length_saved">The USSD length has been saved!!</string>
+    <string name="enter_correct_code">Please enter a valid USSD code</string>
 </resources>

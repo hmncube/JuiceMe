@@ -107,7 +107,7 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
                     )
                 clipboard.setPrimaryClip(clip)
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-                    UserFeedback.displayFeedback(
+                    UserFeedback().displayFeedback(
                         requireView(), String.format(
                             resources.getString(R.string.copied_recharge_code), cardNumber.number),
                         UserFeedback.LENGTH_SHORT
