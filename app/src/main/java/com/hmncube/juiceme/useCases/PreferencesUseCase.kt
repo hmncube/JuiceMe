@@ -3,6 +3,7 @@ package com.hmncube.juiceme.useCases
 import android.content.Context
 import androidx.preference.PreferenceManager
 
+@SuppressWarnings("TooManyFunctions")
 class PreferencesUseCase(private val context: Context) {
     fun saveCarrierName(carrierName: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -52,6 +53,17 @@ class PreferencesUseCase(private val context: Context) {
         return len!!.toInt()
     }
 
+    fun saveSetCustomCode(isSet: Boolean) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(SET_CUSTOM_USSD, isSet)
+        editor.apply()
+    }
+
+    fun getSetCustomCode() : Boolean {
+        return PreferenceManager
+            .getDefaultSharedPreferences(context).getBoolean(SET_CUSTOM_USSD, false)
+    }
     companion object {
         const val CARRIER_NAME = "carrier_name"
         const val USSD_CODE = "ussd_code"
@@ -59,6 +71,7 @@ class PreferencesUseCase(private val context: Context) {
         const val STORE_HISTORY = "store_history"
         const val DIAL_ACTION = "dial_action"
         const val IMAGES = "images"
+        const val SET_CUSTOM_USSD = "set_custom_ussd"
 
         const val DEFAULT_RECHARGE_CARD_LENGTH = "17"
     }

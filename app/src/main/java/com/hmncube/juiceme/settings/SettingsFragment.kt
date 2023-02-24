@@ -46,7 +46,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         autoNetwork = findPreference("network_carrier")
         rechargeCodeLength = findPreference("recharge_code_length_et")
         customDialCodeSet = findPreference("custom_dial_code")
-
     }
 
     private fun setListeners() {
@@ -78,6 +77,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 } else {
                     detectNetworkAndSave()
                 }
+                preferencesUseCase?.saveSetCustomCode(value)
             }
             true
         }
@@ -167,18 +167,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setCarrierNameAndUssdCodes() {
-        val preferencesUseCase = PreferencesUseCase(context = requireContext())
-        val carrierName = preferencesUseCase.getCarrierName()
+        val carrierName = preferencesUseCase?.getCarrierName()
         autoNetwork?.title =  if (carrierName?.isNotEmpty() == true) {
             carrierName
         } else {
             requireContext().resources.getString(R.string.failed_to_automatically_detect_network)
         }
-        autoNetwork?.summary = preferencesUseCase.getUssdCode()
+        autoNetwork?.summary = preferencesUseCase?.getUssdCode()
 
         val index = selectNetwork?.entries?.indexOf(carrierName) ?: -1
         if (index >= 0) {
             selectNetwork?.setValueIndex(index)
+        }
+
+        if (preferencesUseCase?.getSetCustomCode() == true) {
+            autoNetwork?.title = "Custom network"
+            autoNetwork?.summary = preferencesUseCase?.getUssdCode()
         }
     }
     companion object {
