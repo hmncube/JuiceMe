@@ -55,7 +55,7 @@
         android:contentDescription="@string/filePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_file_open"/>
 
@@ -64,7 +64,7 @@
         android:contentDescription="@string/topup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
         android:src="@drawable/ic_phone"/>
 
