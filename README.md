@@ -29,13 +29,17 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - Can automatically topup the airtime if the a valid number is found
 - Automatticaly detect network being used and select the appropriate USSD
 - User can manually set the network
+- User can set custom USSD code
+- User can set the length of the recharge card
 
 ### TODO
 - [X] Add support for another networks
 - [X] Code clean up
 - [X] Handle dual sims (Best fix while supporting Android 5.0)
-- [ ] Make it generic
+- [X] Make it generic
 - [ ] Add tests
-- [ ] ~~Add support for < Android 5.0~~ Adding this will make the app big > 25 mb, still weighing weather to impliment
+- [ ] Use Jetpack Compose
+- [ ] Batch number extraction
+- [ ] ~~Add support for < Android 5.0~~ Adding this will make the app big > 25 mb, still weighing wheather to impliment
 
 ### App Icon <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by Afian Rochmah Afif - Flaticon</a>
