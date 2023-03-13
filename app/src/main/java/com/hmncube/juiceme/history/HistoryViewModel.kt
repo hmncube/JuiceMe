@@ -35,6 +35,7 @@ class HistoryViewModel(private val appDatabase: AppDatabase) : ViewModel() {
     fun clearAll() {
         viewModelScope.launch {
             appDatabase.cardNumberDao().clearAll()
+            _history.value = appDatabase.cardNumberDao().selectAll()
         }
     }
 }

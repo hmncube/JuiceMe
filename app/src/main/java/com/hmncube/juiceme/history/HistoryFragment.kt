@@ -61,8 +61,19 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
         }
 
         viewModel.history.observe(viewLifecycleOwner) { historyData ->
-            adapter.setData(historyData.toMutableList())
+            if (historyData.isEmpty()) {
+                toggleDataViews(View.VISIBLE, View.GONE)
+            } else {
+                adapter.setData(historyData.toMutableList())
+                toggleDataViews(View.GONE, View.VISIBLE)
+            }
         }
+    }
+
+    private fun toggleDataViews(emptyVisibility: Int, recyclerViewVisibility: Int) {
+        viewBinding.emptyLayout.emtpyTv.visibility = emptyVisibility
+
+        viewBinding.historyRv.visibility = recyclerViewVisibility
     }
 
     private fun toggleLoadingState(loading: Boolean) {
@@ -152,6 +163,10 @@ class HistoryFragment : Fragment(), OptionsMenuClickListener {
                 if (menuItem.itemId == R.id.historyOptionsClear) {
                     viewModel.clearAll()
                     adapter.clearAll()
+                    toggleDataViews(
+                        View.VISIBLE,
+                        View.GONE
+                    )
                     return true
                 }
                 return true
