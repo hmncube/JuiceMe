@@ -299,7 +299,9 @@ class HomeFragment : Fragment() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(viewBinding.resultIv.surfaceProvider)
+                    if (this::viewBinding.isInitialized) {
+                        it.setSurfaceProvider(viewBinding.resultIv.surfaceProvider)
+                    }
                 }
 
             imageCapture = ImageCapture.Builder().build()
@@ -326,7 +328,9 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
+        if (this::cameraExecutor.isInitialized) {
+            cameraExecutor.shutdown()
+        }
     }
 
     companion object {
