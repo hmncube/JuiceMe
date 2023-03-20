@@ -4,15 +4,16 @@
 
 Android app using computer vision to topup airtime
 
-~~Currently workes on Econet airtime~~ Now supports all networks in Zimbabwe
-
-Minimum android verion Android 5.0
 
 ### To download
+[![google_play_badge](https://user-images.githubusercontent.com/2725300/226333269-5d452594-a3b0-4fe8-b305-cf75b6ed75ec.png)](https://play.google.com/store/apps/details?id=com.hmncube.juiceme)
+
 Head over to the release section and select the APK depending on your phones architecture. 
 If you are not sure about the architecture or if it is not on the list download the `JuiceMe-universal-release` apk
 
-### Coming soon to the Android Play Store
+~~Currently workes on Econet airtime~~ Now supports all networks in Zimbabwe
+
+Minimum android verion Android 5.0
 
 ~~The application uses Google ML Kit for Text Recognition and so will require an internet connection at the beginning.~~ App now completely works offline
 
