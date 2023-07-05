@@ -1,6 +1,8 @@
 package com.hmncube.juiceme.settings
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.text.isDigitsOnly
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
@@ -36,6 +38,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         updateNetworkCodesViews(customDialCodeSet?.isChecked!!)
 
+        val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("sn")
+        AppCompatDelegate.setApplicationLocales(appLocale)
     }
 
     private fun initViews() {
