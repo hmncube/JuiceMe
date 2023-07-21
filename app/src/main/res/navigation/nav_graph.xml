@@ -5,32 +5,4 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/home"
-        android:name="com.hmncube.juiceme.home.HomeFragment"
-        android:label="Home">
-        <action
-            android:id="@+id/action_homeFragment_to_settingsFragment"
-            app:destination="@id/settings" />
-        <action
-            android:id="@+id/action_homeFragment_to_historyFragment"
-            app:destination="@id/history" />
-    </fragment>
-    <fragment
-        android:id="@+id/history"
-        android:name="com.hmncube.juiceme.history.HistoryFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_history">
-        <action
-            android:id="@+id/action_historyFragment_to_homeFragment"
-            app:destination="@id/home" />
-    </fragment>
-    <fragment
-        android:id="@+id/settings"
-        android:name="com.hmncube.juiceme.settings.SettingsFragment"
-        android:label="Settings">
-        <action
-            android:id="@+id/action_settingsFragment_to_homeFragment"
-            app:destination="@id/home" />
-    </fragment>
 </navigation>
