@@ -1,5 +1,8 @@
 package com.hmncube.juiceme.history
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.hmncube.juiceme.data.AppDatabase
 import com.hmncube.juiceme.data.CardNumber
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class HistoryViewModel(private val appDatabase: AppDatabase) : ViewModel() {
 
@@ -21,9 +25,29 @@ class HistoryViewModel(private val appDatabase: AppDatabase) : ViewModel() {
     init {
         _loading.value = true
         viewModelScope.launch {
-            _history.value = appDatabase.cardNumberDao().selectAll()
+            _history.value = getDummyData()// appDatabase.cardNumberDao().selectAll()
             _loading.value = false
         }
+    }
+
+    private fun getDummyData(): List<CardNumber> {
+        return listOf(
+            CardNumber(
+                1,
+                "22222233344",
+                Calendar.getInstance().timeInMillis
+            ),
+            CardNumber(
+                1,
+                "0022233344",
+                Calendar.getInstance().timeInMillis
+            ),
+            CardNumber(
+                1,
+                "22222233300",
+                Calendar.getInstance().timeInMillis
+            )
+        )
     }
 
     fun deleteEntry(cardNumber: CardNumber) {
@@ -38,4 +62,7 @@ class HistoryViewModel(private val appDatabase: AppDatabase) : ViewModel() {
             _history.value = appDatabase.cardNumberDao().selectAll()
         }
     }
+
+    fun redialNumber() {}
+
 }

@@ -1,4 +1,4 @@
-package com.hmncube.juiceme.home.ui.theme
+package com.hmncube.juiceme.theme
 
 import android.app.Activity
 import android.os.Build

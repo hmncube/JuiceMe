@@ -24,7 +24,7 @@
         android:theme="@style/Theme.JuiceMe"
         tools:targetApi="31">
         <activity
-            android:name=".home.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.JuiceMe">
@@ -39,13 +39,6 @@
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.hmncube.juiceme.home.ui.theme
+package com.hmncube.juiceme.theme
 
 import androidx.compose.ui.graphics.Color
 
