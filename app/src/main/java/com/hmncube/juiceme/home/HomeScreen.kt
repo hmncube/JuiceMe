@@ -43,18 +43,8 @@ import com.hmncube.juiceme.theme.JuiceMeTheme
 import java.util.concurrent.RejectedExecutionException
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
-    /*Scaffold(topBar = {
-        TopAppBar(
-            title = {
-                Text(text = "Home", textAlign = TextAlign.Center)
-            },
-        )
-    }
-    ) {
-    }*/
     HomeContent()
 }
 
