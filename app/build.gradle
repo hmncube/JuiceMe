@@ -7,15 +7,14 @@ plugins {
 
 android {
     namespace 'com.hmncube.juiceme'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.hmncube.juiceme"
         minSdk 21
-        targetSdk 33
-        versionCode 5
-        versionName "1.5.0"
-
+        targetSdk 34
+        versionCode 4
+        versionName "1.3.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -54,4 +54,6 @@
     <string name="ussd_length_not_digits_error">The length should be a number between 1 and 50</string>
     <string name="ussd_length_saved">The USSD length has been saved!!</string>
     <string name="enter_correct_code">Please enter a valid USSD code</string>
+    <string name="nothing_to_display">Nothing to see here!</string>
+    <string name="empty_tray_desc">empty tray</string>
 </resources>
