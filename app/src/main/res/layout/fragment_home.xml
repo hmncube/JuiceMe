@@ -14,7 +14,6 @@
             android:id="@+id/resultIv"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
