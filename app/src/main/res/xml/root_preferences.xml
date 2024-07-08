@@ -29,12 +29,11 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/recharge_code_length"
-        app:summary="@string/recharge_code_length_summary">
+    <PreferenceCategory app:title="@string/recharge_code_length">
         <EditTextPreference
             app:key="recharge_code_length_et"
             app:title="@string/recharge_code_length"
-            app:summary="@string/set_length"/>
+            app:summary="@string/recharge_code_length_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/history_header">
