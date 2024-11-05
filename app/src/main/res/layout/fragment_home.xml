@@ -14,22 +14,21 @@
             android:id="@+id/resultIv"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/resultTv"
-            android:text="@string/results"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/results"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultIv"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultIv" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"
@@ -52,11 +51,20 @@
         android:src="@drawable/ic_camera"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filePickerBtn"
+        android:contentDescription="@string/filePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_file_open"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialBtn"
         android:contentDescription="@string/topup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
         android:src="@drawable/ic_phone"/>
 

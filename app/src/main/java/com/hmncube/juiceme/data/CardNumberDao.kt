@@ -10,7 +10,7 @@ interface CardNumberDao {
     @Insert
     suspend fun insertCardNumber(cardNumber: CardNumber)
 
-    @Query("SELECT * FROM CardNumber")
+    @Query("SELECT * FROM CardNumber Order by date DESC")
     suspend fun selectAll(): List<CardNumber>
 
     @Delete

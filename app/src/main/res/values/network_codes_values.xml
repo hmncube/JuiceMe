@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="network_codes_values">
+        <item>*121*</item>
+        <item>*133*</item>
+        <item>*123*</item>
+    </string-array>
+</resources>
