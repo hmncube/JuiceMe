@@ -20,7 +20,6 @@ App now completely works offline
 
 ### Video Demo
 
-
 https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a405-d430b0c21f56.mp4
 
 ### Features
