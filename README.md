@@ -17,6 +17,7 @@ Minimum android verion Android 5.0
 
 App now completely works offline
 
+
 ### Video Demo
 
 
