@@ -13,7 +13,6 @@ If you are not sure about the architecture or if it is not on the list download 
 
 Works all networks in Zimbabwe
 
-
 Minimum android verion Android 5.0
 
 App now completely works offline
