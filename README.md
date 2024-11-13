@@ -31,7 +31,8 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - User can set custom USSD code
 - User can set the length of the recharge card
 
-### TODO
+### T
+ODO
 - [X] Add support for another networks
 - [X] Code clean up
 - [X] Handle dual sims (Best fix while supporting Android 5.0)
