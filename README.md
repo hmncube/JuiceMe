@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - User can set custom USSD code
 - User can set the length of the recharge card
 
-PUNDEZ 123456789
+PUNDEZ 12345678900000
 ### TODO
 - [X] Add support for another networks
 - [X] Code clean up
