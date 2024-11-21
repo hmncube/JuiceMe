@@ -14,6 +14,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -46,6 +48,7 @@ import java.util.concurrent.RejectedExecutionException
 @SuppressWarnings("TooManyFunctions")
 class HomeFragment : Fragment() {
 
+    private val PICK_IMAGE = 100
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewBinding: FragmentHomeBinding
     private var imageCapture: ImageCapture? = null
@@ -150,6 +153,7 @@ class HomeFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onResume() {
         super.onResume()
         if (grantedCameraPermission) {
@@ -290,6 +294,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 

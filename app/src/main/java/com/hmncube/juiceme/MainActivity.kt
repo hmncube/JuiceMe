@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_host_fragment
         ) as NavHostFragment
         navController = navHostFragment.navController
-
         viewBinding.bottomNav.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(
