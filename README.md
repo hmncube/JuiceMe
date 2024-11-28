@@ -40,6 +40,5 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - [ ] Add tests
 - [ ] Use Jetpack Compose
 - [ ] Batch number extraction
-- [ ] ~~Add support for < Android 5.0~~ Adding this will make the app big > 25 mb, still weighing wheather to impliment
 
 ### App Icon <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by Afian Rochmah Afif - Flaticon</a>
