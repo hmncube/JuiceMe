@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/2725300/211815032-b7eb0a00-3ba4-4e37-a
 - Stores the number
 - Can retry the number later on 
 - Can automatically topup the airtime if the a valid number is found
-- Automatticaly detect network being used and select the appropriate USSD
+- Automatically detect network being used and select the appropriate USSD
 - User can manually set the network
 - User can set custom USSD code
 - User can set the length of the recharge card
